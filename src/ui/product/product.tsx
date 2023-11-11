@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react'
 import ContentLoader from 'react-content-loader';
 
 import 'tailwindcss/tailwind.css'
-import styles from './product.module.scss';
+import { ProductType } from '@/ui/product/product.type'
 
-function Product({isFavorite,isItemAdded,onFavoriteClick,onItemAddedClick}:any) {
+const  Product:FC<ProductType> =
+	({isFavorite,
+		 isItemAdded,
+		 onFavoriteClick,
+		 onItemAddedClick,
+		 nickname,
+		 price,
+image,
+		 id}) => {
 	const loading = false
 
 	return (
-		<div className={`border border-gray-300 p-8 w-56  rounded-[40px]  mr-8 mb-8 transition-transform transition-shadow
+		<div key={id} className={`border border-gray-300 p-8 w-56  rounded-[40px]  mr-8 mb-8 transition-transform transition-shadow
                     ${loading ? 'hover:shadow-none' : 'hover:shadow-lg transform hover:translate-y-[-5px]'}`}>
 			{loading ? (
 				<ContentLoader
@@ -27,12 +35,12 @@ function Product({isFavorite,isItemAdded,onFavoriteClick,onItemAddedClick}:any) 
 			) : (
 				<>
 					<img onClick={onFavoriteClick} className='cursor-pointer absolute' src={isFavorite ? 'img/liked.svg' : 'img/unliked.svg'} alt="Unliked" />
-					<img src='/img/snickers.svg' />
-					<h5 className='text-black text-sm my-4'>Мужские Кроссовки Nike Blazer Mid Suede</h5>
+					<img src={image} />
+					<h5 className='text-black text-sm my-4'>{nickname}</h5>
 					<div className="flex  justify-between align-center ">
 						<div className="flex flex-col">
 							<span className=' text-stone-300 text-[11px] font-medium r uppercase'>Цена:</span>
-							<b className='text-sm'>12 999 руб. </b>
+							<b className='text-sm'>{price}руб. </b>
 						</div>
 							<img
 								onClick={onItemAddedClick}

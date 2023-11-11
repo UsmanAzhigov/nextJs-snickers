@@ -4,7 +4,7 @@ import ContentLoader from 'react-content-loader';
 import 'tailwindcss/tailwind.css'
 import styles from './product.module.scss';
 
-function ProductCard() {
+function ProductCart() {
 	const loading = false
 
 	return (
@@ -19,4 +19,4 @@ function ProductCard() {
 	);
 }
 
-export default ProductCard;
+export default ProductCart;
