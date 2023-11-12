@@ -1,10 +1,6 @@
 import React from 'react';
-import { useDeleteCartItemMutation } from '@/redux/slice/home'
-
-function ProductCart({nickname,price, image, id,}) {
+function ProductCart({nickname,price, image, id,deleteCartItem}) {
 	const loading = false;
-	const [deleteCartItem] = useDeleteCartItemMutation()
-
 
 	return (
 		<div key={id} className={`flex  my-4 border border-gray-300 p-3 items-center   rounded-[20px]  mr-8 mb-8 transition-transform transition-shadow`}>

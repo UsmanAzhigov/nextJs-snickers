@@ -1,9 +1,31 @@
-import React, { useState } from 'react';
 import Link from 'next/link';
-import DrawerCart from '@/components/drawer/drawer';
+import React, { useState } from 'react';
+import { calculateTotalPrice } from '@/utils'
 
-export default function Header({ menuItems }: any) {
+import DrawerCart from '@/components/drawer/drawer';
+import { useGetCartItemsQuery } from '@/redux/slice/home';
+
+export default function Header() {
 	const [isCartOpen, setIsCartOpen] = useState(false);
+	const { data: cart } = useGetCartItemsQuery();
+	const resultPrice = calculateTotalPrice(cart);
+	const menuItems = [
+		{
+			text: `${resultPrice} руб.`,
+			className: 'flex items-center gap-2 font-bold text-zinc-600 text-sm cursor-pointer hover:text-black',
+			icon: '/img/cardMenu.svg',
+		},
+		{
+			text: 'Закладки',
+			className: ' flex items-center  gap-2  text-zinc-600 text-sm cursor-pointer hover:text-black',
+			icon: '/img/favorite.svg',
+		},
+		{
+			text: 'Профиль',
+			className: 'flex items-center gap-2 text-gray-500 text-sm cursor-pointer hover:text-black',
+			icon: '/img/user.svg',
+		},
+	];
 
 	const openCartDrawer = () => {
 		setIsCartOpen(true);
@@ -25,9 +47,9 @@ export default function Header({ menuItems }: any) {
 				</div>
 			</Link>
 			<ul className='flex gap-12'>
-				{menuItems.map((item: { className: string | undefined; text: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.PromiseLikeOfReactNode | null | undefined; icon: string | undefined; }, index: React.Key | null | undefined) => (
+				{menuItems.map((item, index) => (
 					<li key={index} className={item.className}>
-						{item.text === '0 руб.' ? (
+						{item.icon === '/img/cardMenu.svg'  ? (
 							<div onClick={openCartDrawer} className='flex items-center gap-2  text-zinc-600 text-sm cursor-pointer hover:text-black'>
 								<img src={item.icon} />
 								{item.text}
