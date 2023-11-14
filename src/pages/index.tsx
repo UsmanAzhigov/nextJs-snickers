@@ -11,10 +11,10 @@ function Home() {
 
 	const [sneakers, setSneakers] = useState([])
 	const [searchValue, setSearchValue] = useState('')
-
 	const filteredSneakers = sneakers.filter((sneaker) =>
 		sneaker.nickname.toLowerCase().includes(searchValue.toLowerCase())
 	)
+	
 	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
 	}

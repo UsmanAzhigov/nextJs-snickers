@@ -1,28 +1,28 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const api = createApi({
+export const homeApi = createApi({
 	baseQuery: fetchBaseQuery({ baseUrl: 'https://6340472ae44b83bc73cd517a.mockapi.io' }),
 	endpoints: (builder) => ({
 		getItems: builder.query({
-			query: () => 'items',
+			query: () => 'items'
 		}),
 		getCartItems: builder.query({
-			query: () => 'cart',
+			query: () => 'cart'
 		}),
-		postCartItems: builder.mutation( {
+		createCartOrder: builder.mutation({
 			query: (newItem) => ({
 				url: 'cart',
 				method: 'POST',
-				body: newItem,
-			}),
+				body: newItem
+			})
 		}),
 		deleteCartItem: builder.mutation({
 			query: (itemId) => ({
 				url: `cart/${itemId}`,
-				method: 'DELETE',
+				method: 'DELETE'
 			})
 
 		})
-	}),
-});
-export const { useGetItemsQuery, useGetCartItemsQuery, usePostCartItemsMutation, useDeleteCartItemMutation } = api;
+	})
+})
+export const { useGetItemsQuery, useGetCartItemsQuery, usePostCartItemsMutation, useDeleteCartItemMutation } = homeApi
