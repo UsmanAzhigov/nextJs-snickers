@@ -25,4 +25,4 @@ export const homeApi = createApi({
 		})
 	})
 })
-export const { useGetItemsQuery, useGetCartItemsQuery, usePostCartItemsMutation, useDeleteCartItemMutation } = homeApi
+export const { useGetItemsQuery, useGetCartItemsQuery, useCreateCartOrderMutation, useDeleteCartItemMutation } = homeApi

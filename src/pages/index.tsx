@@ -2,19 +2,19 @@ import Image from 'next/image'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import Product from '@/ui/product/product'
 import SearchBar from '@/ui/search-bar/search-bar'
-import { useGetItemsQuery, usePostCartItemsMutation } from '@/redux/slice/home'
+import { useCreateCartOrderMutation, useGetItemsQuery } from '@/redux/slice/home'
 import { message } from 'antd'
 
 function Home() {
 	const { data: items } = useGetItemsQuery()
-	const [postCartItems] = usePostCartItemsMutation()
+	const [createCartOrder] = useCreateCartOrderMutation()
 
 	const [sneakers, setSneakers] = useState([])
 	const [searchValue, setSearchValue] = useState('')
 	const filteredSneakers = sneakers.filter((sneaker) =>
 		sneaker.nickname.toLowerCase().includes(searchValue.toLowerCase())
 	)
-	
+
 	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setSearchValue(e.target.value)
 	}
@@ -26,7 +26,7 @@ function Home() {
 					sneaker.id === productId ? { ...sneaker, [property]: !sneaker[property] } : sneaker
 				)
 			)
-			await postCartItems(newItem)
+			await createCartOrder(newItem)
 			message.success('Вы успешно добавили товар в корзину')
 		} catch (err) {
 			message.error('Не получилось добавить товар в корзину')
