@@ -1,50 +1,52 @@
-import Image from 'next/image';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import Product from '@/ui/product/product';
-import SearchBar from '@/ui/search-bar/search-bar';
+import Image from 'next/image'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import Product from '@/ui/product/product'
+import SearchBar from '@/ui/search-bar/search-bar'
 import { useGetItemsQuery, usePostCartItemsMutation } from '@/redux/slice/home'
 import { message } from 'antd'
 
 function Home() {
-	const [searchValue, setSearchValue] = useState('');
-	const [sneakers, setSneakers] = useState([]);
-	const { data: items } = useGetItemsQuery();
-  const [postCartItems] = usePostCartItemsMutation()
+	const { data: items } = useGetItemsQuery()
+	const [postCartItems] = usePostCartItemsMutation()
+
+	const [sneakers, setSneakers] = useState([])
+	const [searchValue, setSearchValue] = useState('')
+
 	const filteredSneakers = sneakers.filter((sneaker) =>
 		sneaker.nickname.toLowerCase().includes(searchValue.toLowerCase())
-	);
+	)
 	const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-		setSearchValue(e.target.value);
-	};
+		setSearchValue(e.target.value)
+	}
 
 	const onProductToggle = async (productId, property, newItem) => {
-		try{
+		try {
 			setSneakers((prevSneakers) =>
 				prevSneakers.map((sneaker) =>
 					sneaker.id === productId ? { ...sneaker, [property]: !sneaker[property] } : sneaker
 				)
-			);
+			)
 			await postCartItems(newItem)
-			message.success("Вы успешно добавили товар в корзину")
+			message.success('Вы успешно добавили товар в корзину')
+		} catch (err) {
+			message.error('Не получилось добавить товар в корзину')
 		}
-		catch (err) {
-			message.error("Не получилось добавить товар в корзину")
-		}
-	};
+	}
+
 
 	useEffect(() => {
 		const fetchSneakers = async () => {
 			try {
 				setSneakers(
 					items.map((sneaker) => ({ ...sneaker, isFavorite: false, isItemAdded: false }))
-				);
+				)
 			} catch (error) {
-				console.error('Запрос на получение не сработал:', error);
+				console.error('Запрос на получение не сработал:', error)
 			}
-		};
+		}
 
-		fetchSneakers();
-	}, [items]);
+		fetchSneakers()
+	}, [items])
 
 	return (
 		<div className='flex justify-center flex-col gap-10'>
@@ -70,7 +72,7 @@ function Home() {
 				))}
 			</div>
 		</div>
-	);
+	)
 }
 
-export default Home;
+export default Home
